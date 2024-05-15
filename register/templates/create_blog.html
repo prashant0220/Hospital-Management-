@@ -1,0 +1,68 @@
+{%  extends "base.html" %}
+
+{% load static %}
+{% block addcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/posts.css' %}">
+    {% endblock addcss%}
+
+{% block link %}
+<div class="left-links">
+        {% if author.user_type == 'patient' %}
+<!--            <a href="{% url 'posts'%}">Blogs</a>-->
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+        {% else %}
+<!--            <a href="#">Create Blog</a>-->
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'posts' %}">My Blogs</a>
+        {% endif %}
+    </div>
+{% endblock link %}
+
+{% block logout%}
+<div class="right-links">
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+    {% endblock logout %}
+
+{% block body %}
+<div class="create container">
+        <h1>Create new Blog</h1>
+
+        <!-- Blog upload form -->
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required><br>
+
+            <label for="summary">Summary:</label>
+            <textarea id="summary" name="summary" required></textarea><br>
+
+            <label for="content">Content:</label>
+            <textarea id="content" name="content" required></textarea><br>
+
+            <label for="category">Category:</label>
+            <select id="category" name="category" required>
+                <option value="">Select Category</option>
+                {% for category in categories %}
+                <option value="{{ category }}">{{ category }}</option>
+                {% endfor %}
+            </select><br>
+
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="image" required><br>
+
+            <label for="status">Status:</label>
+            <select id="status" name="status">
+                <option value="published" selected>Published</option>
+                <option value="draft">Draft</option>
+            </select><br>
+
+            <button type="submit">Upload Blog</button>
+        </form>
+
+        <!-- Additional content for the doctor's dashboard -->
+    </div>
+
+
+
+{% endblock body %}

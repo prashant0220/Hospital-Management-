@@ -1,0 +1,74 @@
+{%  extends "base.html" %}
+
+{% load static %}
+{% block addcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/posts.css' %}">
+    {% endblock addcss%}
+
+{% block link %}
+<div class="left-links">
+        {% if author.user_type == 'patient' %}
+<!--            <a href="{% url 'posts'%}">Blogs</a>-->
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+        {% else %}
+            <a href="{% url 'create'%}">Create Blog</a>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+        {% endif %}
+    </div>
+{% endblock link %}
+
+{% block logout%}
+<div class="right-links">
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+    {% endblock logout %}
+
+{% block body %}
+<div class="container">
+        <h1> Posts</h1>
+        <!-- Category dropdown to filter posts -->
+        <form method="get">
+            <label for="category">Filter by Category:</label>
+            <select name="category" id="category">
+                <option value="">All Categories</option>
+                {% for category in categories %}
+                    <option value="{{ category }}">{{ category }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="filter-btn">Filter</button>
+        </form>
+    </div>
+
+
+<div class="posts-container">
+    {% if posts %}
+        {% for post in posts %}
+            <div class="blog-item">
+                <h2 class="blog-title">{{ post.title }}</h2>
+                <img src="{{ post.image.url }}" alt="{{ post.title }}" class="blog-image">
+                <p class="blog-summary">
+                    <strong>Summary:</strong>
+                    {% if post.summary|wordcount > 15 %}
+                        {{ post.summary|truncatewords:15 }}...
+                    {% else %}
+                        {{ post.summary }}
+                    {% endif %}
+                </p>
+                <p><a href="{% url 'detail' post_id=post.id %}">Read more</a></p>
+                <p>Status: {{ post.status }}</p>
+                {% if post.status == 'draft' %}
+                    <form action="{% url 'publish_post' post_id=post.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Publish</button>
+                    </form>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+                <p>No posts found for the selected category.</p>
+    {% endif %}
+    </div>
+
+
+
+{% endblock body %}

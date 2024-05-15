@@ -1,0 +1,24 @@
+.container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .post-detail {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .post-detail h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .post-detail p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .post-detail img {
+            max-width: 100%;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }

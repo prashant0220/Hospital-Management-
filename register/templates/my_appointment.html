@@ -1,0 +1,42 @@
+{%  extends "base.html" %}
+
+{% load static %}
+{% block addcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/dlist.css' %}">
+    {% endblock addcss%}
+
+{% block link %}
+<div class="left-links">
+        {% if author.user_type == 'patient' %}
+<!--            <a href="{% url 'posts'%}">Blogs</a>-->
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+        {% else %}
+            <a href="{% url 'create'%}">Create Blog</a>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+        {% endif %}
+    </div>
+{% endblock link %}
+
+{% block logout%}
+<div class="right-links">
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+    {% endblock logout %}
+
+{% block body %}
+
+<h1>Appointment List</h1>
+<div class="posts-container">
+    <div class="blog-item">
+            {% for appointment in appointments %}
+                <h3>Appointment</h3>
+                <p>Patient: {{ appointment.patient }}</p>
+                <p>Speciality: {{ appointment.speciality }}</p>
+                <p>Date: {{ appointment.ap_date }}</p>
+                <p>From: {{ appointment.start_time }}</p>
+                <p>To: {{ appointment.end_time }}</p>
+            </div>
+</div>
+    {% endfor %}
+
+{% endblock body %}

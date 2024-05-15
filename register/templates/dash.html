@@ -1,0 +1,48 @@
+{%  extends "base.html" %}
+
+{% load static %}
+
+
+{% block link %}
+<div class="left-links">
+        {% if author.user_type == 'patient' %}
+            <a href="{% url 'posts' %}">Blogs</a>
+            <a href="{% url 'doctors' %}">Doctors</a>
+        {% else %}
+            <a href="{% url 'create'%}">Create Blog</a>
+            <a href="{% url 'posts' %}">My Blogs</a>
+            <a href="{% url 'my_appointment' %}">My Appointments</a>
+        {% endif %}
+    </div>
+{% endblock link %}
+
+{% block logout%}
+<div class="right-links">
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+    {% endblock logout %}
+
+{% block body %}
+
+<div class="containerd">
+    <div class="profile">
+        <img src="{{ img }}" alt="P">
+        <div class="role">
+            {{ author.user_type }}
+        </div>
+
+    </div>
+    <div class="user-details">
+        <h2>Dashboard</h2>
+        <br>
+        <div class="user-info">
+            <p><strong>Name:</strong> {{ author.first_name }} {{ author.last_name }}</p>
+            <p><strong>Username:</strong> {{ author.username }}</p>
+            <p><strong>Email:</strong> {{ author.email }}</p>
+            <p><strong>Address:</strong> {{ author.address }}</p>
+            <!-- Add more user information fields as needed -->
+        </div>
+
+    </div>
+</div>
+{% endblock body %}

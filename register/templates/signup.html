@@ -1,0 +1,75 @@
+{%  extends "base.html" %}
+
+{% load static %}
+
+
+
+{% block body %}
+
+   <div class="container">
+    <h2>Registration</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <center>
+                    <h3 style="color:red">
+                        {{message}}
+                    </h3>
+                  </center>
+            {% endfor %}
+    {% endif %}
+
+
+    <form action="{% url 'signup'%}" id="signupForm" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+	<div class="form-group">
+            <label for="id_user_type">User Type:</label>
+            <select name="user_type" id="id_user_type">
+                <option value="doctor">Doctor</option>
+                <option value="patient">Patient</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="id_first_name">First Name:</label>
+            <input type="text" name="first_name" id="id_first_name" required>
+        </div>
+        <div class="form-group">
+            <label for="id_last_name">Last Name:</label>
+            <input type="text" name="last_name" id="id_last_name" required>
+        </div>
+        <div class="form-group">
+            <label for="id_username">Username:</label>
+            <input type="text" name="username" id="id_username" required>
+        </div>
+        <div class="form-group">
+            <label for="id_email">Email:</label>
+            <input type="email" name="email" id="id_email" required>
+        </div>
+        <div class="form-group">
+            <label for="id_password1">Password:</label>
+            <input type="password" name="password1" id="id_password1" required>
+        </div>
+        <div class="form-group">
+            <label for="id_password2">Confirm Password:</label>
+            <input type="password" name="password2" id="id_password2" required>
+        </div>
+        <div class="form-group">
+            <label for="id_profile_picture">Profile Picture:</label>
+            <input type="file" name="profile_picture" id="id_profile_picture">
+        </div>
+        <div class="form-group">
+            <label for="id_address">Address:</label>
+            <input type="text" name="address" id="id_address" required>
+        </div>
+
+        <button type="submit" value="Register">Sign Up</button>
+
+	<div class="login-link">
+        Already Registered <a href="{% url 'login'%}">Login</a>
+    	</div>
+
+    </form>
+</div>
+
+ {% endblock body %}

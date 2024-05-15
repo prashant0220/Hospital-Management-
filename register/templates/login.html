@@ -1,0 +1,51 @@
+{%  extends "base.html" %}
+
+{% load static %}
+
+
+
+{% block body %}
+
+   <div class="container">
+    <h2>User Login</h2>
+       {% if messages %}
+            {% for message in messages %}
+                <center>
+                    <h3 style="color:red">
+                        {{message}}
+                    </h3>
+                  </center>
+            {% endfor %}
+    {% endif %}
+
+    <form id="signupForm" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+	<div class="form-group">
+            <label for="id_user_type">User Type:</label>
+            <select name="user_type" id="id_user_type">
+                <option value="doctor">Doctor</option>
+                <option value="patient">Patient</option>
+            </select>
+        </div>
+
+
+        <div class="form-group">
+            <label for="id_username">Username:</label>
+            <input type="text" name="username" id="id_username" required>
+        </div>
+
+        <div class="form-group">
+            <label for="id_password1">Password:</label>
+            <input type="password" name="password1" id="id_password1" required>
+        </div>
+
+        <button type="submit" value="Register">Login</button>
+
+	<div class="login-link">
+        New User <a href="{% url 'signup'%}">Register here</a>
+    	</div>
+
+    </form>
+</div>
+
+    {% endblock body %}

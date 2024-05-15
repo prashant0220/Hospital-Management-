@@ -1,0 +1,199 @@
+.header {
+    background-color: #333;
+    color: #fff;
+    padding-right:10px;
+    padding-left:10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-links a, .right-links a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.logo {
+    max-width: 100%; /* Ensures the logo does not exceed the container width */
+    margin: 0 auto; /* Center the logo */
+    text-align: center; /* Center the image within the container */
+}
+
+.logo img {
+    width: 700px; /* Adjust the width of the logo */
+    height: 80px; /* Maintain aspect ratio */
+}
+
+
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F0E5C9;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    color: black;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #495057;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+    width: calc(100% - 22px); /* Adjusted width */
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    margin-top: 5px; /* Added margin */
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+select:focus {
+    border-color: #007bff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+input[type="file"] {
+    width: calc(100% - 82px);
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.login-link a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+.containerd {
+    margin: 50px auto;
+    padding: 20px;
+    max-width: 700px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+}
+
+.profile {
+    width: 120px;
+    margin-right: 20px;
+    margin-top:80px;
+}
+
+.role {
+    background-color: black;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.profile img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* To make the image circular */
+    border: 2px solid #007bff; /* Add a border around the image */
+}
+
+.user-details {
+    flex-grow: 1; /* Allow user-details div to take up remaining space */
+}
+
+.h2 {
+    color: #007bff;
+}
+
+.user-info {
+    margin-bottom: 20px;
+    margin-left: 50px;
+}
+
+.user-info p {
+    margin: 5px 0;
+}
+
+
+
+
+
+
+
+
+
+/* CSS styles for header */
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 10px 10px;
+    }
+
+    .logo img {
+        height: 50px;
+	width: 300px;
+    }
+
+    .buttons button {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .buttons button {
+        padding: 6px 12px;
+    }
+}
+

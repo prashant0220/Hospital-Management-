@@ -1,0 +1,41 @@
+{%  extends "base.html" %}
+
+{% load static %}
+{% block addcss %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/detail.css' %}">
+    {% endblock addcss%}
+
+{% block link %}
+<div class="left-links">
+        {% if author.user_type == 'patient' %}
+<!--            <a href="{% url 'posts'%}">Blogs</a>-->
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'posts' %}">Blogs</a>
+        {% else %}
+<!--            <a href="#">Create Blog</a>-->
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'posts' %}">My Blogs</a>
+        {% endif %}
+    </div>
+{% endblock link %}
+
+{% block logout%}
+<div class="right-links">
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+    {% endblock logout %}
+
+{% block body %}
+    <div class="container">
+    <div class="post-detail">
+        <h1>{{ post.title }}</h1>
+        <p><strong>Doctor:</strong> {{ post.author }}</p>
+        <p><strong>Category:</strong> {{ post.category }}</p>
+        {% if post.image %}
+        <img src="{{ post.image.url }}" alt="{{ post.title }}">
+        {% endif %}
+        <p>{{ post.content }}</p>
+    </div>
+</div>
+
+{% endblock body %}
