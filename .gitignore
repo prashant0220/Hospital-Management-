@@ -1,4 +1,4 @@
 credentials.json
 token.json
 db.sqlite3
-.gitignore
+gitignore
