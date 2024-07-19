@@ -183,7 +183,7 @@ def Appointment_book(request, doctor_id):
                                                             ap_date=date,
                                                             start_time=start_time, end_time=end_time)
             appointment.save()
-            # event_id = create_google_calender_event(appointment)
+            event_id = create_google_calender_event(appointment)
             return redirect('booked')
     return render(request, "book_appointment.html", {'doctor': doctor, })
 
@@ -203,37 +203,39 @@ def myappointment(request):
         return render(request, "my_appointment.html", {'appointments': appointments})
 
 
-# def create_google_calender_event(appointment):
-#     SCOPES = ['https://www.googleapis.com/auth/calendar.events']
-#     creds = None
-#     if os.path.exists('token.json'):
-#         creds = Credentials.from_authorized_user_file('token.json')
-#     if not creds or not creds.valid:
-#         if creds and creds.expired and creds.refresh_token:
-#             creds.refresh(Request())
-#         else:
-#             flow = InstalledAppFlow.from_client_secrets_file(
-#                 'credentials.json', SCOPES)
-#             creds = flow.run_local_server(port=0)
-#             with open('token.json', 'w') as token:
-#                 token.write(creds.to_json())
-#             flow.server.shutdown()
-#
-#     service = build('calendar', 'v3', credentials=creds)
-#
-#     event = {
-#         'summary': 'Appointment with ' + appointment.doctor.first_name + ' ' + appointment.doctor.last_name,
-#         'description': 'Appointment with ' + appointment.doctor.first_name + ' ' + appointment.doctor.last_name,
-#         'start': {
-#             'dateTime': appointment.ap_date.isoformat() + 'T' + appointment.start_time.isoformat(),
-#             'timeZone': 'UTC',
-#         },
-#         'end': {
-#             'dateTime': appointment.ap_date.isoformat() + 'T' + appointment.end_time.isoformat(),
-#             'timeZone': 'UTC',
-#         },
-#
-#     }
-#
-#     event = service.events().insert(calendarId='primary', body=event).execute()
-#     return event.get('id')
+def create_google_calender_event(appointment):
+    SCOPES = ['https://www.googleapis.com/auth/calendar']
+    creds = None
+    if os.path.exists('token.json'):
+        creds = Credentials.from_authorized_user_file('token.json')
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
+            creds = flow.run_local_server(port=0)
+
+        with open('token.json', 'w') as token:
+            token.write(creds.to_json())
+        # flow.server.shutdown()
+
+    service = build('calendar', 'v3', credentials=creds)
+
+    event = {
+        'summary': 'Appointment with ' + appointment.doctor.first_name + ' ' + appointment.doctor.last_name,
+        'description': 'Appointment with ' + appointment.doctor.first_name + ' ' + appointment.doctor.last_name,
+        'start': {
+            'dateTime': appointment.ap_date.isoformat() + 'T' + appointment.start_time.isoformat(),
+            'timeZone': 'UTC',
+        },
+        'end': {
+            'dateTime': appointment.ap_date.isoformat() + 'T' + appointment.end_time.isoformat(),
+            'timeZone': 'UTC',
+        },
+
+    }
+
+    event = service.events().insert(calendarId='primary', body=event).execute()
+    return event.get('id')
+
+
