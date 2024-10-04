@@ -1,4 +1,5 @@
 import os
+import string
 
 from datetime import timedelta, datetime
 
@@ -183,7 +184,7 @@ def Appointment_book(request, doctor_id):
                                                             ap_date=date,
                                                             start_time=start_time, end_time=end_time)
             appointment.save()
-            event_id = create_google_calender_event(appointment)
+            create_google_calender_event(appointment)
             return redirect('booked')
     return render(request, "book_appointment.html", {'doctor': doctor, })
 
@@ -223,6 +224,7 @@ def create_google_calender_event(appointment):
 
     event = {
         'summary': 'Appointment with ' + appointment.doctor.first_name + ' ' + appointment.doctor.last_name,
+        'Location': "800 Howard St., San Francisco, CA 94103",
         'description': 'Appointment with ' + appointment.doctor.first_name + ' ' + appointment.doctor.last_name,
         'start': {
             'dateTime': appointment.ap_date.isoformat() + 'T' + appointment.start_time.isoformat(),
