@@ -2,3 +2,4 @@ credentials.json
 token.json
 db.sqlite3
 gitignore
+hospital/settings.py
