@@ -6,10 +6,10 @@ from datetime import timedelta, datetime
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.urls import reverse
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
-from googleapiclient.discovery import build
+# from google.oauth2.credentials import Credentials
+# from google_auth_oauthlib.flow import InstalledAppFlow
+# from google.auth.transport.requests import Request
+# from googleapiclient.discovery import build
 
 from .models import CustomUser, Post, PatientAppointment
 
@@ -184,7 +184,7 @@ def Appointment_book(request, doctor_id):
                                                             ap_date=date,
                                                             start_time=start_time, end_time=end_time)
             appointment.save()
-            create_google_calender_event(appointment)
+            # create_google_calender_event(appointment)
             return redirect('booked')
     return render(request, "book_appointment.html", {'doctor': doctor, })
 
@@ -204,40 +204,40 @@ def myappointment(request):
         return render(request, "my_appointment.html", {'appointments': appointments})
 
 
-def create_google_calender_event(appointment):
-    SCOPES = ['https://www.googleapis.com/auth/calendar']
-    creds = None
-    if os.path.exists('token.json'):
-        creds = Credentials.from_authorized_user_file('token.json')
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
-            creds = flow.run_local_server(port=0)
+# def create_google_calender_event(appointment):
+#     SCOPES = ['https://www.googleapis.com/auth/calendar']
+#     creds = None
+#     if os.path.exists('token.json'):
+#         creds = Credentials.from_authorized_user_file('token.json')
+#     if not creds or not creds.valid:
+#         if creds and creds.expired and creds.refresh_token:
+#             creds.refresh(Request())
+#         else:
+#             flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
+#             creds = flow.run_local_server(port=0)
 
-        with open('token.json', 'w') as token:
-            token.write(creds.to_json())
-        # flow.server.shutdown()
+#         with open('token.json', 'w') as token:
+#             token.write(creds.to_json())
+#         # flow.server.shutdown()
 
-    service = build('calendar', 'v3', credentials=creds)
+#     service = build('calendar', 'v3', credentials=creds)
 
-    event = {
-        'summary': 'Appointment with ' + appointment.doctor.first_name + ' ' + appointment.doctor.last_name,
-        'Location': "800 Howard St., San Francisco, CA 94103",
-        'description': 'Appointment with ' + appointment.doctor.first_name + ' ' + appointment.doctor.last_name,
-        'start': {
-            'dateTime': appointment.ap_date.isoformat() + 'T' + appointment.start_time.isoformat(),
-            'timeZone': 'UTC',
-        },
-        'end': {
-            'dateTime': appointment.ap_date.isoformat() + 'T' + appointment.end_time.isoformat(),
-            'timeZone': 'UTC',
-        },
+#     event = {
+#         'summary': 'Appointment with ' + appointment.doctor.first_name + ' ' + appointment.doctor.last_name,
+#         'Location': "800 Howard St., San Francisco, CA 94103",
+#         'description': 'Appointment with ' + appointment.doctor.first_name + ' ' + appointment.doctor.last_name,
+#         'start': {
+#             'dateTime': appointment.ap_date.isoformat() + 'T' + appointment.start_time.isoformat(),
+#             'timeZone': 'UTC',
+#         },
+#         'end': {
+#             'dateTime': appointment.ap_date.isoformat() + 'T' + appointment.end_time.isoformat(),
+#             'timeZone': 'UTC',
+#         },
 
-    }
+#     }
 
-    event = service.events().insert(calendarId='primary', body=event).execute()
-    return event.get('id')
+#     event = service.events().insert(calendarId='primary', body=event).execute()
+#     return event.get('id')
 
 
